@@ -1,12 +1,13 @@
 const Discord = require("discord.js")
-let cooldown = new Set()
+let cooldown = new Map()
 const prefix = require("../config.json").prefix
 
 module.exports = (client, message) => {
     if(message.content.startsWith(prefix)) {
         if(cooldown.has(message.author.id)) {
-            message.delete;
-            message.reply(`${cdseconds}`);
+            message.delete()
+            let remaining = cdseconds - ((Date.now() - cooldown.get(message.author.id)) / 1000)
+            message.reply(`Tu as ${Number.parseFloat(remaining).toFixed(2)} secondes de cooldown avant de réutiliser cette commande.`)
             return
         }
     }
@@ -24,7 +25,7 @@ module.exports = (client, message) => {
         cmd.run(client, message, args)
         cdseconds = cmd.help.cooldown
 
-        cooldown.add(message.author.id)
+        cooldown.set(message.author.id, Date.now())
         
         setTimeout(() => {
             cooldown.delete(message.author.id)

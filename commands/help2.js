@@ -11,8 +11,8 @@ module.exports.run = async(client, message, args) => {
 }
 
 module.exports.help = {
-    name: "help",
-    cooldown: 5,
-    aliases: ['h'],
+    name: "help2",
+    cooldown: 6,
+    aliases: ['h2'],
     category: "about"
 }

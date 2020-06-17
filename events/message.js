@@ -15,6 +15,10 @@ module.exports = (client, message) => {
                 return
             }
         }
+        if(client.disabled.has(cmd.help.name)) {
+            message.reply(" this command is disabled.")
+            return
+        }
         if(message.author.bot || message.channel.type === 'dm') {return}
         if(!message.channel.permissionsFor(client.user).has('SEND_MESSAGES')) {return}
         

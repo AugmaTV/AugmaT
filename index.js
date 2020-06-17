@@ -3,11 +3,19 @@ const fs = require('fs')
 const client = new Discord.Client()
 const token = require("./token.json").discord
 
-client.login(token).then(console.log("Bot Logged On, Ready To Work"))
+client.login(token).then(() => {
+    console.log("Bot Logged On, Ready To Work")
+    client.user.setActivity("In Dev.", {type: "PLAYING"})
+})
 
 client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
+client.disabled = new Set()
 client.owner = "AugmaDev#4544"
+client.color = {
+    about: "#00BFFF",
+    support: "#6a07e7"
+}
 
 fs.readdir('./commands/', (error, f) => {
     if (error) {return console.error(error)}
@@ -33,6 +41,6 @@ fs.readdir('./events/', (error, f) => {
         f.forEach((f) => {
             let events = require(`./events/${f}`)
             let event = f.split('.')[0]
-            client.on(event, events.bind(null, client));
+            client.on(event, events.bind(null, client))
         })
 })
